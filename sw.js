@@ -45,13 +45,13 @@ self.addEventListener("fetch", function (event) {
   event.respondWith(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.match(event.request).then((res) => {
-        if (res) {
-          return res;
-        }
-        return fetch(event.request).then((res) => {
-          cache.put(event.request, res.clone());
-          return res;
-        });
+        return (
+          res ||
+          fetch(event.request).then((res) => {
+            cache.put(event.request, res.clone());
+            return res;
+          })
+        );
       });
     })
   );

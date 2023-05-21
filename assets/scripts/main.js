@@ -25,6 +25,7 @@ async function init() {
     console.error(e);
   }
   // Add each recipe to the <main> element
+  console.log(recipes);
   addRecipesToDocument(recipes);
 }
 
@@ -121,7 +122,7 @@ async function getRecipes() {
         let res = await fetch(RECIPE_URLS[i]);
         let recipe = await res.json();
         recipes.push(recipe);
-        if (i + 1 === RECIPE_URLS.length) {
+        if (i === RECIPE_URLS.length - 1) {
           saveRecipesToStorage(recipes);
           resolve(recipes);
         }
